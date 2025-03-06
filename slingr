@@ -126,7 +126,10 @@ x.current() { echo "$APP"-"$ENV"; }
 HELP[login]="Login to $APP provision"
 
 x.login() {
-  password="$(_read_secret 'Password')"
+  password="$1"
+  if [[ -z "$password" ]]; then
+    password="$(_read_secret 'Password')"
+  fi
 
   res="$(curl -s -X POST "$URL/auth/login" \
     -H "Content-Type: application/json" \
